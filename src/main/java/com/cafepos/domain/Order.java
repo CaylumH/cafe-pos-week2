@@ -1,0 +1,45 @@
+package com.cafepos.domain;
+
+import java.util.List;
+import java.util.ArrayList;
+import com.cafepos.common.Money;
+
+public final class Order {
+    private final long id;
+    private final List<LineItem> items = new ArrayList<>();
+
+    public Order(long id) {
+        this.id = id;
+    }
+
+    public long id() {
+        return id;
+    }
+
+    public List<LineItem> items() {
+        return List.copyOf(items);
+    }
+
+    public void addItem(LineItem lineItem) {
+        if (lineItem == null) throw new IllegalArgumentException("Line item required");
+        if (lineItem.quantity() <= 0) throw new IllegalArgumentException("Quantity must be > 0");
+        items.add(lineItem);
+    }
+
+    public Money subtotal() {
+        return items.stream()
+                    .map(LineItem::lineTotal)
+                    .reduce(Money.zero(), Money::add);
+    }
+
+    public Money taxAtPercent(int percent) {
+        if (percent < 0) throw new IllegalArgumentException("Percent must be >= 0");
+        Money subtotal = subtotal();
+        double taxRate = percent / 100.0;
+        return Money.of(subtotal.toDouble() * taxRate);
+    }
+
+    public Money totalWithTax(int percent) {
+        return subtotal().add(taxAtPercent(percent));
+    }
+}
