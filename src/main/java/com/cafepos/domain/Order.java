@@ -3,6 +3,7 @@ package com.cafepos.domain;
 import java.util.List;
 import java.util.ArrayList;
 import com.cafepos.common.Money;
+import com.cafepos.payment.PaymentStrategy;
 
 public final class Order {
     private final long id;
@@ -21,19 +22,22 @@ public final class Order {
     }
 
     public void addItem(LineItem lineItem) {
-        if (lineItem == null) throw new IllegalArgumentException("Line item required");
-        if (lineItem.quantity() <= 0) throw new IllegalArgumentException("Quantity must be > 0");
+        if (lineItem == null)
+            throw new IllegalArgumentException("Line item required");
+        if (lineItem.quantity() <= 0)
+            throw new IllegalArgumentException("Quantity must be > 0");
         items.add(lineItem);
     }
 
     public Money subtotal() {
         return items.stream()
-                    .map(LineItem::lineTotal)
-                    .reduce(Money.zero(), Money::add);
+                .map(LineItem::lineTotal)
+                .reduce(Money.zero(), Money::add);
     }
 
     public Money taxAtPercent(int percent) {
-        if (percent < 0) throw new IllegalArgumentException("Percent must be >= 0");
+        if (percent < 0)
+            throw new IllegalArgumentException("Percent must be >= 0");
         Money subtotal = subtotal();
         double taxRate = percent / 100.0;
         return Money.of(subtotal.toDouble() * taxRate);
@@ -41,5 +45,11 @@ public final class Order {
 
     public Money totalWithTax(int percent) {
         return subtotal().add(taxAtPercent(percent));
+    }
+
+    public void pay(PaymentStrategy strategy) {
+        if (strategy == null)
+            throw new IllegalArgumentException("strategy required");
+        strategy.pay(this);
     }
 }
