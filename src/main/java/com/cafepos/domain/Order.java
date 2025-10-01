@@ -21,12 +21,14 @@ public final class Order {
         return List.copyOf(items);
     }
 
+    // 3) Hook notifications into existing behaviors
     public void addItem(LineItem lineItem) {
         if (lineItem == null)
             throw new IllegalArgumentException("Line item required");
         if (lineItem.quantity() <= 0)
             throw new IllegalArgumentException("Quantity must be > 0");
         items.add(lineItem);
+        // TODO: call super/add to items and then notifyObservers("itemAdded")
     }
 
     public Money subtotal() {
@@ -51,5 +53,27 @@ public final class Order {
         if (strategy == null)
             throw new IllegalArgumentException("strategy required");
         strategy.pay(this);
+        // TODO: delegate to strategy as before, then notifyObservers("paid")
     }
+
+    // 1) Maintain subscriptions
+    private final List<OrderObserver> observers = new ArrayList<>();
+
+    public void register(OrderObserver o) {
+        // TODO: add null check and add the observer
+    }
+
+    public void unregister(OrderObserver o) {
+        // TODO: remove the observer if present
+    }
+
+    // 2) Publish events
+    private void notifyObservers(String eventType) {
+        // TODO: iterate observers and call updated(this, eventType)
+    }
+
+public void markReady() {
+// TODO: just publish notifyObservers("ready")
+
+}
 }
