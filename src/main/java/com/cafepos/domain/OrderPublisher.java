@@ -1,3 +1,5 @@
+package com.cafepos.domain;
+
 public interface OrderPublisher {
 void register(OrderObserver o);
 void unregister(OrderObserver o);

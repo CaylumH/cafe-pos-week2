@@ -59,7 +59,7 @@ public final class Order {
     // 1) Maintain subscriptions
     private final List<OrderObserver> observers = new ArrayList<>();
 
-void register(OrderObserver o){
+public void register(OrderObserver o){
     observers.add(o);
 };
 void unregister(OrderObserver o){
@@ -68,7 +68,7 @@ observers.remove(o);
 
 void notifyObservers(String eventType){
     for(OrderObserver observer: observers){
-        observer.update(this,eventType);
+        observer.updated(this,eventType);
 }
 }
 public void markReady() {
