@@ -59,20 +59,22 @@ public final class Order {
     // 1) Maintain subscriptions
     private final List<OrderObserver> observers = new ArrayList<>();
 
-public void register(OrderObserver o){
-    observers.add(o);
-};
-void unregister(OrderObserver o){
-observers.remove(o);
-}
+    public void register(OrderObserver o) {
+        observers.add(o);
+    };
 
-void notifyObservers(String eventType){
-    for(OrderObserver observer: observers){
-        observer.updated(this,eventType);
-}
-}
-public void markReady() {
-notifyObservers("ready");
+    public void unregister(OrderObserver o) {
+        observers.remove(o);
+    }
 
-}
+    void notifyObservers(String eventType) {
+        for (OrderObserver observer : observers) {
+            observer.updated(this, eventType);
+        }
+    }
+
+    public void markReady() {
+        notifyObservers("ready");
+
+    }
 }

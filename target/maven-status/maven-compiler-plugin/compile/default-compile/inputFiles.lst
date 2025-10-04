@@ -5,9 +5,15 @@ C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepo
 C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\common\SimpleProduct.java
 C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\demo\Week2Demo.java
 C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\demo\Week3Demo.java
+C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\demo\Week4Demo.java
 C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\domain\LineItem.java
+C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\domain\observer\CustomerNotifier.java
+C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\domain\observer\DeliveryDesk.java
+C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\domain\observer\KitchenDisplay.java
 C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\domain\Order.java
 C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\domain\OrderIds.java
+C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\domain\OrderObserver.java
+C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\domain\OrderPublisher.java
 C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\payment\CardPayment.java
 C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\payment\CashPayment.java
 C:\Users\joeco\OneDrive\Documents\CS4928\cafe-pos-week2\src\main\java\com\cafepos\payment\PaymentStrategy.java

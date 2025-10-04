@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import com.cafepos.domain.LineItem;
+
 public class SimpleProductTest {
     @Test
     void constructor_setsFieldsCorrectly() {
@@ -81,5 +83,11 @@ public class SimpleProductTest {
         assertEquals("P1", product.id());
         assertEquals("Coffee", product.name());
         assertEquals(Money.of(10.00), product.basePrice());
+    }
+
+    @Test
+    void constructor_rejectsNegativeQuantity() {
+        Product product = new SimpleProduct("P1", "Coffee", Money.of(10.00));
+        assertThrows(IllegalArgumentException.class, () -> new LineItem(product, -1));
     }
 }
