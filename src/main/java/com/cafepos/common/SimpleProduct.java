@@ -1,6 +1,8 @@
 package com.cafepos.common;
 
-public final class SimpleProduct implements Product {
+import com.cafepos.decorator.Priced;
+
+public final class SimpleProduct implements Product, Priced {
     private final String id;
     private final String name;
     private final Money basePrice;
@@ -32,5 +34,10 @@ public final class SimpleProduct implements Product {
     @Override
     public Money basePrice() {
         return basePrice;
+    }
+
+    @Override
+    public Money price() {
+        return basePrice; // for base products, price = basePrice
     }
 }
