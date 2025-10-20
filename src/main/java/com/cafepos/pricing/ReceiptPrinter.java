@@ -1,7 +1,5 @@
 package com.cafepos.pricing;
 
-import com.cafepos.common.Money;
-
 public final class ReceiptPrinter {
 
     public String format(String recipe, int qty, PricingService.PricingResult pr, int taxPercent) {
