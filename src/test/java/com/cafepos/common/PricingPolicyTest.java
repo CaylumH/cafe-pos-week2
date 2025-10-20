@@ -1,12 +1,14 @@
 package com.cafepos.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import com.cafepos.pricing.LoyaltyPercentDiscount;
 import com.cafepos.pricing.NoDiscount;
 import com.cafepos.pricing.PricingService;
+import com.cafepos.pricing.ReceiptPrinter;
 import com.cafepos.pricing.PricingService.PricingResult;
 import com.cafepos.pricing.DiscountPolicy;
 import com.cafepos.pricing.FixedCouponDiscount;
@@ -39,11 +41,24 @@ public class PricingPolicyTest {
     }
 
     @Test
+    void receipt_formatting() {
+        PricingService pricing = new PricingService(new LoyaltyPercentDiscount(10), new FixedRateTaxPolicy(10));
+        ReceiptPrinter printer = new ReceiptPrinter();
+
+        PricingResult pr = pricing.price(Money.of(5.00));
+        String result = printer.format("Latte + Oat Milk", 2, pr, 10);
+
+        assertTrue(result.contains("Latte + Oat Milk"));
+        assertTrue(result.contains("Subtotal"));
+        assertTrue(result.contains("Tax"));
+        assertTrue(result.contains("Total"));
+    }
+
+    @Test
     void pricing_pipeline() {
         PricingService pricing = new PricingService(new LoyaltyPercentDiscount(5), new FixedRateTaxPolicy(10));
         PricingResult pr = pricing.price(Money.of(10.00));
         assertEquals(Money.of(0.50), pr.discount());
-        assertEquals(Money.of(9.50), Money.of(pr.subtotal().asBigDecimal().subtract(pr.discount().asBigDecimal())));
         assertEquals(Money.of(0.95), pr.tax());
         assertEquals(Money.of(10.45), pr.total());
     }

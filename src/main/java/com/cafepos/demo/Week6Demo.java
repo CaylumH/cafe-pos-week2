@@ -16,6 +16,7 @@ import com.cafepos.pricing.FixedRateTaxPolicy;
 import com.cafepos.pricing.LoyaltyPercentDiscount;
 import com.cafepos.pricing.PricingService;
 import com.cafepos.pricing.PricingService.PricingResult;
+import com.cafepos.pricing.ReceiptPrinter;
 import com.cafepos.pricing.TaxPolicy;
 
 public final class Week6Demo {
@@ -26,6 +27,8 @@ public final class Week6Demo {
         DiscountPolicy discountPolicy = new LoyaltyPercentDiscount(5);
         TaxPolicy taxPolicy = new FixedRateTaxPolicy(10);
         PricingService pricingService = new PricingService(discountPolicy, taxPolicy);
+        ReceiptPrinter receiptPrinter = new ReceiptPrinter();
+        int taxPercent = 10;
 
         System.out.println("Enter drink order (eg, ESP+SHOT+L or LAT+OAT)");
         System.out.println("Type 'done' when finished");
@@ -58,14 +61,17 @@ public final class Week6Demo {
         System.out.println("ORDER SUMMARY");
 
         order.items().forEach(li -> {
-            System.out.println(" - " + li.product().name() + " x" + li.quantity() +  " =" + li.lineTotal());
+            PricingService.PricingResult pr = pricingService.price(li.lineTotal());
+            String receipt = receiptPrinter.format(li.product().name(), li.quantity(), pr, taxPercent);
+            System.out.println(receipt);
+            System.out.println("--------------------------------");
         });
 
         PricingResult pr = pricingService.price(order.subtotal());
         System.out.println("--------------------------------");
         System.out.println("Subtotal: " + order.subtotal());
         System.out.println("Discount: -" + pr.discount());
-        System.out.println("Tax (10%): " + pr.tax());
+        System.out.println("Tax (" + taxPercent + "%): " + pr.tax());
         System.out.println("Total: " + pr.total());
         System.out.println("--------------------------------");
         System.out.println("");
@@ -74,27 +80,22 @@ public final class Week6Demo {
         System.out.println("Enter choice (1,2 or 3): ");
         String choice = scanner.nextLine().trim();
 
-        PaymentStrategy paymentStrategy = null;
-
-        switch (choice) {
-            case "1":
+        PaymentStrategy paymentStrategy = switch (choice) {
+            case "1"-> {
                 System.out.println("Enter card number: ");
-                String cardNumber = scanner.nextLine().trim();
-                paymentStrategy = new CardPayment(cardNumber);
-                break;
-            case "2":
-                paymentStrategy = new CashPayment();
-                break;
-            case "3":
+                yield new CardPayment(scanner.nextLine().trim());
+            }
+            case "2" -> 
+                new CashPayment();
+            case "3" -> {
                 System.out.println("Enter wallet ID: ");
-                String walletId = scanner.nextLine().trim();
-                paymentStrategy = new WalletPayment(walletId);
-                break;
-            default:
+                yield new WalletPayment(scanner.nextLine().trim());
+            }
+            default -> {
                 System.out.println("Inalid choice. Defaulting to Cash Payment");
-                paymentStrategy = new CashPayment();
-                break;
-        }
+                yield new CashPayment();
+            }
+        };
 
         System.out.println("");
         System.out.println("Processing payment....");
