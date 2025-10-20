@@ -21,7 +21,7 @@ public final class ProductFactory {
                 p = new SimpleProduct("P-ESP", "Espresso", Money.of(2.50));
                 break;
             case "LAT":
-                p = new SimpleProduct("P-LAT", "Latte", Money.of(3.00));
+                p = new SimpleProduct("P-LAT", "Latte", Money.of(3.20));
                 break;
             case "CAP":
                 p = new SimpleProduct("P-CAP", "Cappuccino", Money.of(3.00));

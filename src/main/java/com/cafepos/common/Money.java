@@ -14,12 +14,21 @@ public final class Money implements Comparable<Money> {
         return new Money(bd);
     }
 
+    public static Money of(BigDecimal value) {
+        if (value == null)
+            throw new IllegalArgumentException("amount required");
+        if (value.compareTo(BigDecimal.ZERO) < 0)
+            value = BigDecimal.ZERO; // cap at 0
+        return new Money(value.setScale(2, RoundingMode.HALF_UP));
+    }
+
     public static Money zero() {
         return new Money(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP));
     }
 
     private Money(BigDecimal a) {
-        if (a == null) throw new IllegalArgumentException("amount required");
+        if (a == null)
+            throw new IllegalArgumentException("amount required");
         if (a.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Negative amounts are not allowed");
         }
@@ -27,27 +36,48 @@ public final class Money implements Comparable<Money> {
     }
 
     public Money add(Money other) {
-        if (other == null) throw new IllegalArgumentException("other quantity required");
+        if (other == null)
+            throw new IllegalArgumentException("other quantity required");
         BigDecimal result = this.amount.add(other.amount).setScale(2, RoundingMode.HALF_UP);
         return new Money(result);
     }
 
+    public Money subtract(Money other) {
+        if (other == null)
+            throw new IllegalArgumentException("other quantity required");
+        BigDecimal result = this.amount.subtract(other.amount).setScale(2, RoundingMode.HALF_UP);
+        if (result.compareTo(BigDecimal.ZERO) < 0)
+            return Money.zero();
+        return new Money(result);
+    }
+
     public Money multiply(int qty) {
-        if (qty < 0) throw new IllegalArgumentException("Negative quantity not allowed");
+        if (qty < 0)
+            throw new IllegalArgumentException("Negative quantity not allowed");
         BigDecimal result = this.amount.multiply(BigDecimal.valueOf(qty)).setScale(2, RoundingMode.HALF_UP);
+        return new Money(result);
+    }
+
+    public Money multiply(BigDecimal factor) {
+        if (factor == null)
+            throw new IllegalArgumentException("factor required");
+        BigDecimal result = this.amount.multiply(factor).setScale(2, RoundingMode.HALF_UP);
         return new Money(result);
     }
 
     @Override
     public int compareTo(Money other) {
-        if (other == null) throw new IllegalArgumentException("other quantity required");
+        if (other == null)
+            throw new IllegalArgumentException("other quantity required");
         return this.amount.compareTo(other.amount);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Money)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Money))
+            return false;
         Money other = (Money) o;
         return this.amount.equals(other.amount);
     }
@@ -59,11 +89,14 @@ public final class Money implements Comparable<Money> {
 
     @Override
     public String toString() {
-        return "$" + amount.toString();
+        return amount.setScale(2, RoundingMode.HALF_UP).toPlainString();
     }
 
     public double toDouble() {
-    return amount.doubleValue();
-}
+        return amount.doubleValue();
+    }
 
+    public BigDecimal asBigDecimal() {
+        return amount;
+    }
 }
