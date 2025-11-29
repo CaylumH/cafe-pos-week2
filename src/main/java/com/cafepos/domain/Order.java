@@ -31,6 +31,10 @@ public final class Order {
         notifyObservers("itemAdded");
     }
 
+    public void removeLastItem() { 
+        if (!items.isEmpty()) items.remove(items.size()-1); 
+        notifyObservers("itemRemoved");}
+
     public Money subtotal() {
         return items.stream()
                 .map(LineItem::lineTotal)
