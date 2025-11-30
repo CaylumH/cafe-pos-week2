@@ -1,3 +1,8 @@
+Caylum Hurley - 22356363
+Joe Considine - 22344977
+
+Github: https://github.com/CaylumH/cafe-pos-week2
+
 Removed God Class & Long methods by extracting DiscountPolicy, TaxPolicy, PricingService, ReceiptPrint, CheckoutService.
 Replaced Primitive Obesessions such as 'discountCode' strings with typed policy classes
 Removed Global/Static State LAST_DISCOUNT_CODE, TAX_PERCENT by passing dependencies in constructor
