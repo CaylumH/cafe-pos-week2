@@ -15,7 +15,6 @@ import vendor.legacy.LegacyThermalPrinter;
 public class AdapterTest {
     @Test
     void adapter_calls_legacy_printer() {
-        //Captures console output
         var originalOut = System.out;
         var output = new ByteArrayOutputStream();
         System.setOut(new PrintStream(output));
