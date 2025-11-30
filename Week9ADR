@@ -1,0 +1,3 @@
+Week 9 ADR - Using State Pattern for Order Lifecycle
+
+Order status with long if/else chains are difficult to decipher and aren't easily scalable.  We could've considered keeping the enums with condtionals, but we implemented the State patterns and delegate transitions via OrderFSM.This makes the order lifecycle very clear, with easy addition of new states. A consequence of this is that it introduced more classes that we have to manage.
