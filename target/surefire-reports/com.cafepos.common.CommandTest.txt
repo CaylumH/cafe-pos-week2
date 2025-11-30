@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: com.cafepos.common.DecoratorTest
+Test set: com.cafepos.common.CommandTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s -- in com.cafepos.common.DecoratorTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.051 s -- in com.cafepos.common.CommandTest

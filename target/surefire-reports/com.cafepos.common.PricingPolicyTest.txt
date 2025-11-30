@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.cafepos.common.PricingPolicyTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.052 s -- in com.cafepos.common.PricingPolicyTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.053 s -- in com.cafepos.common.PricingPolicyTest
