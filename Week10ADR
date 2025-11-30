@@ -1,0 +1,3 @@
+Week 10 ADR - Layered Monolith reasoning
+
+Our system was becoming more and more difficult to maintain as the weeks went on with more and more features being added. The layered monolith was a good edition because it keeps things simpler and scalable. The number of dependencies goes down and future splitting into services becomes simpler.
